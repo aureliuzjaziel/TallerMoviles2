@@ -3,6 +3,8 @@ import React from 'react'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+
+
 import PerfilScreen from '../screens/PerfilScreen'
 import JuegoScreen from '../screens/JuegoScreen'
 import ScoreScreen from '../screens/ScoreScreen'
@@ -10,7 +12,7 @@ import WelcomeScreen from '../screens/WelcomeScreen'
 import loginScreen from '../screens/LoginScreen'
 import RegistroScreen from '../screens/RegistroScreen'
 
-// Importa tus screens aquí
+ 
 
 
 const Stack = createNativeStackNavigator()
