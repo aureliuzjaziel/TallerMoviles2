@@ -1,11 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import App from '../components/App'
 
-export default function JuegoScreen() {
+export default function JuegoScreen({navigation}: any) {
   return (
-    <View>
-      <Text>JuegoScreen</Text>
-    </View>
+    <App navigation={navigator}/>
   )
 }
 
