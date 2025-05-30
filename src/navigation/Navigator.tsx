@@ -32,7 +32,7 @@ function MyDrawer() {
 
 function MyStack() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Drawer">
+    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Welcome">
       <Stack.Screen name="Welcome" component={WelcomeScreen} />
       <Stack.Screen name="Login" component={loginScreen} />
       <Stack.Screen name="Registro" component={RegistroScreen} />
