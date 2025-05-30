@@ -15,6 +15,7 @@ export default function WelcomeScreen({ navigation }: any) {
         style={styles.button}
         onPress={() => navigation.navigate('Registro')}
       >
+        
         <Text style={styles.buttonText}>Registrarse</Text>
       </TouchableOpacity>
     </View>

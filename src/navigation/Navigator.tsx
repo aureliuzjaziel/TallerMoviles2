@@ -11,6 +11,8 @@ import ScoreScreen from '../screens/ScoreScreen'
 import WelcomeScreen from '../screens/WelcomeScreen'
 import loginScreen from '../screens/LoginScreen'
 import RegistroScreen from '../screens/RegistroScreen'
+import App from '../components/App'
+
 
  
 
@@ -34,6 +36,7 @@ function MyStack() {
       <Stack.Screen name="Welcome" component={WelcomeScreen} />
       <Stack.Screen name="Login" component={loginScreen} />
       <Stack.Screen name="Registro" component={RegistroScreen} />
+       <Stack.Screen name="App" component={App} />
       <Stack.Screen name="Drawer" component={MyDrawer} />
     </Stack.Navigator>
   )

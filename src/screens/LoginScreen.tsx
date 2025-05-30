@@ -2,30 +2,30 @@ import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
 import React, { useState } from 'react'
 import { styles } from '../theme/estilos'
 
-export default function loginScreen() {
-   const [nombre, setNombre] = useState('')
-  const [apellido, setApellido] = useState('')
+export default function loginScreen({ navigation }: any) {
+   const [usuario, setUsuario] = useState('')
+  const [contrasena, setContrasena] = useState('')
  
 
   return (
     <View style={styles.container}>
-      <Text style={{ fontSize: 24, fontWeight: 'bold' }}>Guardar</Text>
-       <Text style={{ fontSize: 24, fontWeight: 'bold' }}>Eliminar</Text>
+      <Text style={{ fontSize: 24, fontWeight: 'bold' }}>Inicia Secion</Text>
       <TextInput
-        placeholder='Nombre'
+        placeholder='Usuario'
         style={styles.input}
-        value={nombre}
-        onChangeText={setNombre}
+        value={usuario}
+        onChangeText={setUsuario}
       />
       <TextInput
-        placeholder='Apellido'
+        placeholder='contrasena'
         style={styles.input}
-        value={apellido}
-        onChangeText={setApellido}
+        value={contrasena}
+        onChangeText={setContrasena}
       />
       
       <Button
-        title='Guardar'
+        title='ingresar'
+        onPress={() => navigation.navigate('App')}
         
       />
 
