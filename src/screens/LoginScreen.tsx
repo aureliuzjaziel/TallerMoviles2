@@ -10,7 +10,7 @@ export default function loginScreen() {
   return (
     <View style={styles.container}>
       <Text style={{ fontSize: 24, fontWeight: 'bold' }}>Guardar</Text>
-      
+       <Text style={{ fontSize: 24, fontWeight: 'bold' }}>Eliminar</Text>
       <TextInput
         placeholder='Nombre'
         style={styles.input}
