@@ -1,123 +1,35 @@
-
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
-
-export default function LoginScreen({ navigation }: any) {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-
-  const handleLogin = () => {
-    // Aquí iría la lógica de autenticación
-    // navigation.navigate('Drawer') // Descomenta para navegar tras login exitoso
-  }
-
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Iniciar Sesión</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Correo electrónico"
-        value={email}
-        onChangeText={setEmail}
-        autoCapitalize="none"
-        keyboardType="email-address"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Contraseña"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Ingresar</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('Registro')}>
-        <Text style={styles.linkText}>¿No tienes cuenta? Regístrate</Text>
-      </TouchableOpacity>
-=======
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
 import React, { useState } from 'react'
 import { styles } from '../theme/estilos'
 
 export default function loginScreen() {
-   const [nombre, setNombre] = useState('')
-  const [apellido, setApellido] = useState('')
+   const [usuario, setUsuario] = useState('')
+  const [contrasena, setContrasena] = useState('')
  
 
   return (
     <View style={styles.container}>
-      <Text style={{ fontSize: 24, fontWeight: 'bold' }}>Guardar</Text>
-       <Text style={{ fontSize: 24, fontWeight: 'bold' }}>Eliminar</Text>
+      <Text style={{ fontSize: 24, fontWeight: 'bold' }}>Inicia Secion</Text>
       <TextInput
-        placeholder='Nombre'
+        placeholder='Usuario'
         style={styles.input}
-        value={nombre}
-        onChangeText={setNombre}
+        value={usuario}
+        onChangeText={setUsuario}
       />
       <TextInput
-        placeholder='Apellido'
+        placeholder='contrasena'
         style={styles.input}
-        value={apellido}
-        onChangeText={setApellido}
+        value={contrasena}
+        onChangeText={setContrasena}
       />
       
       <Button
-        title='Guardar'
+        title='ingresar'
         
       />
 
 
 
->>>>>>> 5c2b5572fcd4090ca071fcde19e3d914d2c0f82d
     </View>
   )
 }
-
-<<<<<<< HEAD
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    marginBottom: 30
-  },
-  input: {
-    width: '100%',
-    height: 50,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 8,
-    marginBottom: 20,
-    paddingHorizontal: 15,
-    fontSize: 16
-  },
-  button: {
-    backgroundColor: '#2196F3',
-    padding: 15,
-    borderRadius: 8,
-    width: '100%',
-    alignItems: 'center',
-    marginBottom: 15
-  },
-  buttonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 16
-  },
-  linkText: {
-    color: '#2196F3',
-    marginTop: 10
-  }
-})
-=======
->>>>>>> 5c2b5572fcd4090ca071fcde19e3d914d2c0f82d
-
-
-
-
