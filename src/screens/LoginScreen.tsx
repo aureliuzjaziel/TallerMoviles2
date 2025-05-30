@@ -2,7 +2,11 @@ import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
 import React, { useState } from 'react'
 import { styles } from '../theme/estilos'
 
+<<<<<<< HEAD
 export default function loginScreen({ navigation }: any) {
+=======
+export default function loginScreen() {
+>>>>>>> 271ddd9ed3cab4c55b63db5b57977fea41dd83b4
    const [usuario, setUsuario] = useState('')
   const [contrasena, setContrasena] = useState('')
  
@@ -25,7 +29,10 @@ export default function loginScreen({ navigation }: any) {
       
       <Button
         title='ingresar'
+<<<<<<< HEAD
         onPress={() => navigation.navigate('App')}
+=======
+>>>>>>> 271ddd9ed3cab4c55b63db5b57977fea41dd83b4
         
       />
 
@@ -34,8 +41,3 @@ export default function loginScreen({ navigation }: any) {
     </View>
   )
 }
-
-
-
-
-

@@ -4,7 +4,7 @@ import React from 'react'
 export default function WelcomeScreen({ navigation }: any) {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text style={{ fontSize: 24, fontWeight: 'bold' }}>Bienvenido</Text>
+      <Text style={{ fontSize: 24, fontWeight: 'bold' }}>Bienvenido a nuestro juego</Text>
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate('Login')}
