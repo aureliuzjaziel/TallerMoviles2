@@ -1,3 +1,4 @@
+
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 
@@ -34,10 +35,46 @@ export default function LoginScreen({ navigation }: any) {
       <TouchableOpacity onPress={() => navigation.navigate('Registro')}>
         <Text style={styles.linkText}>¿No tienes cuenta? Regístrate</Text>
       </TouchableOpacity>
+=======
+import { Button, StyleSheet, Text, TextInput, View } from 'react-native'
+import React, { useState } from 'react'
+import { styles } from '../theme/estilos'
+
+export default function loginScreen() {
+   const [nombre, setNombre] = useState('')
+  const [apellido, setApellido] = useState('')
+ 
+
+  return (
+    <View style={styles.container}>
+      <Text style={{ fontSize: 24, fontWeight: 'bold' }}>Guardar</Text>
+       <Text style={{ fontSize: 24, fontWeight: 'bold' }}>Eliminar</Text>
+      <TextInput
+        placeholder='Nombre'
+        style={styles.input}
+        value={nombre}
+        onChangeText={setNombre}
+      />
+      <TextInput
+        placeholder='Apellido'
+        style={styles.input}
+        value={apellido}
+        onChangeText={setApellido}
+      />
+      
+      <Button
+        title='Guardar'
+        
+      />
+
+
+
+>>>>>>> 5c2b5572fcd4090ca071fcde19e3d914d2c0f82d
     </View>
   )
 }
 
+<<<<<<< HEAD
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -78,6 +115,8 @@ const styles = StyleSheet.create({
     marginTop: 10
   }
 })
+=======
+>>>>>>> 5c2b5572fcd4090ca071fcde19e3d914d2c0f82d
 
 
 
