@@ -1,17 +1,33 @@
-import { Text, TextInput, View, TouchableOpacity, ImageBackground, Image } from 'react-native'
+import { Text, TextInput, View, TouchableOpacity, ImageBackground, Image, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { styles } from '../theme/estilos'
+import { createUserWithEmailAndPassword, } from 'firebase/auth'
+import { screens } from '../../firebase/config'
 
 const backgroundImage = require('../imagenes/fondonuves.jpg') // Fondo
 const logo = require('../imagenes/logo game.png') // Logo
 
-export default function RegistroScreen() {
+export default function RegistroScreen({ navigation }: any) {
   const [usuario, setUsuario] = useState('')
   const [correo, setCorreo] = useState('')
   const [contrasena, setContrasena] = useState('')
   const [repetirContrasena, setRepetirContrasena] = useState('')
   const [numero, setNumero] = useState('')
 
+  function Registro()
+{
+  createUserWithEmailAndPassword(screens, usuario, contrasena)
+  .then((userCredential) => {
+    // Signed up 
+    const user = userCredential.user;
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // ..
+  });
+}
   return (
     <ImageBackground source={backgroundImage} style={styles.background} resizeMode="cover">
       <View style={styles.overlay}>
@@ -20,8 +36,8 @@ export default function RegistroScreen() {
         <TextInput
           placeholder='Usuario'
           style={styles.input}
+          onChangeText={(texto) => setUsuario(texto)}
           value={usuario}
-          onChangeText={setUsuario}
           placeholderTextColor="black"
         />
         <TextInput
@@ -34,8 +50,8 @@ export default function RegistroScreen() {
         <TextInput
           placeholder='Contraseña'
           style={styles.input}
+          onChangeText={(texto) => setContrasena(texto)}
           value={contrasena}
-          onChangeText={setContrasena}
           secureTextEntry
           placeholderTextColor="black"
         />
@@ -57,7 +73,7 @@ export default function RegistroScreen() {
         />
         <TouchableOpacity
           style={[styles.button, styles.buttonRegistro]}
-          onPress={() => {}}
+          onPress={() => Registro()}
         >
           <Text style={styles.buttonText}>Registrarse</Text>
         </TouchableOpacity>
