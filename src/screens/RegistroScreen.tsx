@@ -1,8 +1,9 @@
 import { Text, TextInput, View, TouchableOpacity, ImageBackground, Image, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { styles } from '../theme/estilos'
-import { createUserWithEmailAndPassword, } from 'firebase/auth'
-import { screens } from '../../firebase/config'
+
+import { auth} from '../../firebase/config'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
 
 const backgroundImage = require('../imagenes/fondonuves.jpg') // Fondo
 const logo = require('../imagenes/logo game.png') // Logo
@@ -16,7 +17,7 @@ export default function RegistroScreen({ navigation }: any) {
 
   function Registro()
 {
-  createUserWithEmailAndPassword(screens, usuario, contrasena)
+  createUserWithEmailAndPassword(auth, usuario, contrasena)
   .then((userCredential) => {
     // Signed up 
     const user = userCredential.user;

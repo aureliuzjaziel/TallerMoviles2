@@ -2,7 +2,7 @@ import { Text, TextInput, View, TouchableOpacity, ImageBackground, Image, Alert 
 import React, { useState } from 'react'
 import { styles } from '../theme/estilos'
 import { signInWithEmailAndPassword } from 'firebase/auth'
-import { screens } from '../../firebase/config'
+import { auth } from '../../firebase/config'
 
 const backgroundImage = require('../imagenes/fondonuves.jpg') // Fondo
 const logo = require('../imagenes/logo game.png') // Logo
@@ -12,7 +12,7 @@ export default function loginScreen({ navigation }: any) {
   const [contrasena, setContrasena] = useState('')
 
   function login() {
-    signInWithEmailAndPassword(screens, usuario, contrasena)
+    signInWithEmailAndPassword(auth, usuario, contrasena)
       .then((userCredential) => {
         // Signed in 
         const user = userCredential.user;
