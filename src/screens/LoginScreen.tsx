@@ -2,7 +2,9 @@ import { Text, TextInput, View, TouchableOpacity, ImageBackground, Image, Alert 
 import React, { useState } from 'react'
 import { styles } from '../theme/estilos'
 import { signInWithEmailAndPassword } from 'firebase/auth'
-import { auth } from '../../firebase/config'
+import { supabase } from '../../supabase/config'
+//import { auth } from '../../firebase/config'
+
 
 const backgroundImage = require('../imagenes/fondonuves.jpg') // Fondo
 const logo = require('../imagenes/logo game.png') // Logo
@@ -11,8 +13,8 @@ export default function loginScreen({ navigation }: any) {
   const [usuario, setUsuario] = useState('')
   const [contrasena, setContrasena] = useState('')
 
-  function login() {
-    signInWithEmailAndPassword(auth, usuario, contrasena)
+  async function login() {
+    /*signInWithEmailAndPassword(auth, usuario, contrasena)
       .then((userCredential) => {
         // Signed in 
         const user = userCredential.user;
@@ -24,7 +26,16 @@ export default function loginScreen({ navigation }: any) {
         const errorCode = error.code;
         const errorMessage = error.message;
         Alert.alert("Error", "Usuario o contraseña incorrectos");
-      });
+      });*/
+      const { data, error } = await supabase.auth.signInWithPassword({
+  email: usuario,
+  password: contrasena,
+})
+if(data.user === null){
+  Alert.alert("Error", "Credenciales incorrectas")
+}else{
+  navigation.navigate("Drawer"); // Navegar a la pantalla Drawer
+}
   }
 
 
@@ -36,7 +47,6 @@ export default function loginScreen({ navigation }: any) {
         <TextInput
           placeholder='Correo'
           style={styles.input}
-
           onChangeText={(texto) => setUsuario(texto)}
           value={usuario}
           placeholderTextColor="black"
