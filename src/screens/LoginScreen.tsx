@@ -1,7 +1,7 @@
 import { Text, TextInput, View, TouchableOpacity, ImageBackground, Image, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { styles } from '../theme/estilos'
-import { signInWithEmailAndPassword } from 'firebase/auth'
+//import { signInWithEmailAndPassword } from 'firebase/auth'
 import { supabase } from '../../supabase/config'
 //import { auth } from '../../firebase/config'
 

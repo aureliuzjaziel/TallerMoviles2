@@ -25,7 +25,12 @@ export default function RegistroScreen({ navigation }: any) {
   email: correo,
   password: contrasena,
 })
-console.log(data, error)
+
+if(data.user === null){
+  Alert.alert("Error", "Ingrese letras y numeros en la contraseña")
+}else{
+  navigation.navigate("Login"); 
+}
   }
   
 
