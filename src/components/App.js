@@ -2,9 +2,11 @@ import * as React from "react";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaView, StyleSheet, Text, View, ImageBackground } from "react-native";
 import Card from "./Card";
-import { styles as globalStyles } from '../theme/estilos'; // Importa los estilos globales
+import { styles as globalStyles } from '../theme/estilos';
+import { auth } from '../../firebase/config'; // ← Agregar importación
+import { saveUserScore } from '../../services/scoreService'; // ← Agregar importación
 
-const backgroundImage = require('../imagenes/fondonuves.jpg'); // Fondo
+const backgroundImage = require('../imagenes/fondonuves.jpg');
 
 const cards = [
   "🐷",
@@ -15,11 +17,12 @@ const cards = [
   "🥑",
 ];
 
-export default function App({navigation}) {
+export default function App() {
   const [board, setBoard] = React.useState(() => shuffle([...cards, ...cards]));
   const [selectedCards, setSelectedCards] = React.useState([]);
   const [matchedCards, setMatchedCards] = React.useState([]);
   const [score, setScore] = React.useState(0);
+  const [gameFinished, setGameFinished] = React.useState(false); // ← Agregar estado faltante
 
   React.useEffect(() => {
     if (selectedCards.length < 2) return;
@@ -40,6 +43,17 @@ export default function App({navigation}) {
   };
 
   const didPlayerWin = () => matchedCards.length === board.length;
+
+  // Guardar puntuación cuando termine el juego
+  React.useEffect(() => {
+    if (didPlayerWin() && !gameFinished) {
+      setGameFinished(true);
+      const user = auth.currentUser;
+      if (user) {
+        saveUserScore(user.uid, user.email || 'Usuario', score);
+      }
+    }
+  }, [matchedCards, gameFinished, score]);
 
   return (
     <ImageBackground source={backgroundImage} style={globalStyles.background} resizeMode="cover">

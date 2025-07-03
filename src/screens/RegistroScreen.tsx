@@ -1,7 +1,9 @@
 import { Text, TextInput, View, TouchableOpacity, ImageBackground, Image, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { styles } from '../theme/estilos'
-import { supabase } from '../../supabase/config'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { auth } from '../../firebase/config'
+//import { supabase } from '../../supabase/config'
 
 
 
@@ -20,7 +22,8 @@ export default function RegistroScreen({ navigation }: any) {
   const [repetirContrasena, setRepetirContrasena] = useState('')
   const [numero, setNumero] = useState('')
 
-  async function registro() {
+  //base de supabase
+  /*async function registro() {
     const { data, error } = await supabase.auth.signUp({
   email: correo,
   password: contrasena,
@@ -31,7 +34,23 @@ if(data.user === null){
 }else{
   navigation.navigate("Login"); 
 }
-  }
+  }*/
+ function Registro() {
+        createUserWithEmailAndPassword(auth, correo, contrasena)
+
+            .then((userCredential) => {
+                // Signed up 
+                const user = userCredential.user;
+                navigation.navigate('Login')
+                // ...
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // ..
+            });
+
+    }
   
 
   
@@ -80,7 +99,7 @@ if(data.user === null){
         />
         <TouchableOpacity
           style={[styles.button, styles.buttonRegistro]}
-          onPress={() => registro()}
+          onPress={() => Registro()}
         >
           <Text style={styles.buttonText}>Registrarse</Text>
         </TouchableOpacity>
