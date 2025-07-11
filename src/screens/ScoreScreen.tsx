@@ -3,8 +3,6 @@ import React, { useState, useEffect } from 'react'
 import { styles as globalStyles } from '../theme/estilos'
 import { getAllScores, UserScore } from '../../services/scoreService'
 
-
-
 const backgroundImage = require('../imagenes/fondonuves.jpg')
 const logo = require('../imagenes/logo game.png')
 
@@ -31,7 +29,7 @@ export default function ScoreScreen({ navigation }: any) {
   const renderScoreItem = ({ item, index }: { item: UserScore, index: number }) => (
     <View style={styles.scoreItem}>
       <Text style={styles.position}>#{index + 1}</Text>
-      <Text style={styles.userName}>{item.userName}</Text>
+      <Text style={styles.userName}>{item.user_name}</Text> 
       <Text style={styles.score}>{item.score} puntos</Text>
     </View>
   )
@@ -42,12 +40,7 @@ export default function ScoreScreen({ navigation }: any) {
         <Image source={logo} style={globalStyles.logo} resizeMode="contain" />
         <Text style={globalStyles.title}>Puntuaciones</Text>
         
-        <TouchableOpacity
-          style={[globalStyles.button, globalStyles.buttonIngresar]}
-          onPress={() => navigation.openDrawer()}
-        >
-          <Text style={globalStyles.buttonText}>Abrir menú</Text>
-        </TouchableOpacity>
+      
 
         {loading ? (
           <Text style={globalStyles.title}>Cargando...</Text>
@@ -55,7 +48,7 @@ export default function ScoreScreen({ navigation }: any) {
           <FlatList
             data={scores}
             renderItem={renderScoreItem}
-            keyExtractor={(item) => item.id || Math.random().toString()}
+            keyExtractor={(item) => item.id?.toString() || Math.random().toString()} 
             style={styles.scoresList}
             showsVerticalScrollIndicator={false}
           />
@@ -64,6 +57,7 @@ export default function ScoreScreen({ navigation }: any) {
     </ImageBackground>
   )
 }
+
 
 const styles = StyleSheet.create({
   scoresList: {

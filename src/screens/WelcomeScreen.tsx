@@ -10,7 +10,8 @@ export default function WelcomeScreen({ navigation }: any) {
     <ImageBackground source={backgroundImage} style={styles.background} resizeMode="cover">
       <View style={styles.overlay}>
         <Image source={logo} style={styles.logo} resizeMode="contain" />
-        <Text style={styles.title}>Bienvenido a nuestro juego</Text>
+        <Text style={styles.title}>Bienvenido</Text>
+         <Text style={styles.title}>Ingresa y comienza a jugar</Text>
         <TouchableOpacity
           style={[styles.button, styles.buttonIngresar]}
           onPress={() => navigation.navigate('Login')}

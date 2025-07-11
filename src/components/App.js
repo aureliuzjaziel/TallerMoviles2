@@ -1,10 +1,10 @@
 import * as React from "react";
 import { StatusBar } from "expo-status-bar";
-import { SafeAreaView, StyleSheet, Text, View, ImageBackground } from "react-native";
+import { SafeAreaView, StyleSheet, Text, View, ImageBackground, TouchableOpacity } from "react-native";
 import Card from "./Card";
 import { styles as globalStyles } from '../theme/estilos';
-import { auth } from '../../firebase/config'; // ← Agregar importación
-import { saveUserScore } from '../../services/scoreService'; // ← Agregar importación
+import { supabase } from '../../supabase/config'; // Changed from Firebase to Supabase
+import { saveUserScore } from '../../services/scoreService'; // Make sure this uses Supabase
 
 const backgroundImage = require('../imagenes/fondonuves.jpg');
 
@@ -22,7 +22,20 @@ export default function App() {
   const [selectedCards, setSelectedCards] = React.useState([]);
   const [matchedCards, setMatchedCards] = React.useState([]);
   const [score, setScore] = React.useState(0);
-  const [gameFinished, setGameFinished] = React.useState(false); // ← Agregar estado faltante
+  const [gameFinished, setGameFinished] = React.useState(false);
+  const [userName, setUserName] = React.useState('Usuario');
+
+  // Get user info when component mounts
+  React.useEffect(() => {
+    const fetchUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        setUserName(user.email?.split('@')[0] || 'Usuario');
+      }
+    };
+    
+    fetchUser();
+  }, []);
 
   React.useEffect(() => {
     if (selectedCards.length < 2) return;
@@ -44,16 +57,27 @@ export default function App() {
 
   const didPlayerWin = () => matchedCards.length === board.length;
 
-  // Guardar puntuación cuando termine el juego
+  // Save score when game ends
   React.useEffect(() => {
     if (didPlayerWin() && !gameFinished) {
       setGameFinished(true);
-      const user = auth.currentUser;
-      if (user) {
-        saveUserScore(user.uid, user.email || 'Usuario', score);
-      }
+      const saveScore = async () => {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user) {
+          await saveUserScore(user.id, userName, score);
+        }
+      };
+      saveScore();
     }
-  }, [matchedCards, gameFinished, score]);
+  }, [matchedCards, gameFinished, score, userName]);
+
+  const resetGame = () => {
+    setBoard(shuffle([...cards, ...cards]));
+    setMatchedCards([]);
+    setSelectedCards([]);
+    setScore(0);
+    setGameFinished(false);
+  };
 
   return (
     <ImageBackground source={backgroundImage} style={globalStyles.background} resizeMode="cover">
@@ -62,6 +86,11 @@ export default function App() {
           {didPlayerWin() ? "Congratulations 🎉" : "Memory"}
         </Text>
         <Text style={[globalStyles.title, styles.scoreTitle]}>Score: {score}</Text>
+        {didPlayerWin() && (
+          <Text style={[globalStyles.title, styles.finalScore]}>
+            Final Score: {score}
+          </Text>
+        )}
         <View style={[globalStyles.board, styles.board]}>
           {board.map((card, index) => {
             const isTurnedOver =
@@ -77,6 +106,14 @@ export default function App() {
             );
           })}
         </View>
+        {didPlayerWin() && (
+          <TouchableOpacity 
+            style={[globalStyles.button, styles.resetButton]}
+            onPress={resetGame}
+          >
+            <Text style={globalStyles.buttonText}>Play Again</Text>
+          </TouchableOpacity>
+        )}
         <StatusBar style="light" />
       </View>
     </ImageBackground>
@@ -99,6 +136,15 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: "#FFD700",
     marginBottom: 10,
+  },
+  finalScore: {
+    fontSize: 28,
+    color: "#4CAF50",
+    marginBottom: 20,
+  },
+  resetButton: {
+    marginTop: 20,
+    backgroundColor: "#2196F3",
   },
 });
 

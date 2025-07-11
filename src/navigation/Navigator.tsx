@@ -6,11 +6,12 @@ import PerfilScreen from '../screens/PerfilScreen'
 import JuegoScreen from '../screens/JuegoScreen'
 import ScoreScreen from '../screens/ScoreScreen'
 import WelcomeScreen from '../screens/WelcomeScreen'
-
-import RegistroScreen from '../screens/RegistroScreen'
 import App from '../components/App'
 import { createStackNavigator } from '@react-navigation/stack'
-import LoginScreen from '../screens/LoginScreen'
+import LoginScreen from '../../auth/LoginScreen'
+import RegistroScreen from '../../auth/RegistroScreen'
+
+
 
 
  
@@ -21,7 +22,7 @@ const Drawer = createDrawerNavigator()
 
 function MyStack() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false}} initialRouteName='Welcome'>
+    <Stack.Navigator screenOptions={{ headerShown: false}}>
       <Stack.Screen name="Welcome" component={WelcomeScreen} />
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Registro" component={RegistroScreen} />
