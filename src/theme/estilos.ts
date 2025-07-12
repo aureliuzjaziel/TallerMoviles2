@@ -30,16 +30,16 @@ export const styles = StyleSheet.create({
     backgroundColor: 'rgba(236, 233, 233, 0.68)'
   },
   logo: {
-    width: 120,
-    height: 120,
-    marginBottom: 30,
-    marginTop: 40,
+    width: 100,
+    height: 100,
+    marginBottom: 20,
+    marginTop: 5,
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
     color: '#FFD700',
-    marginBottom: 40,
+    marginBottom: 30,
     textShadowColor: '#000',
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 6,

@@ -6,6 +6,7 @@ export interface UserScore {
   user_name: string;
   score: number;
   created_at?: string;
+  avatar_url?: string; // ← Campo para avatar
 }
 
 // Create scores table first in Supabase with these columns:
@@ -14,95 +15,112 @@ export interface UserScore {
 // user_name (text)
 // score (integer)
 // created_at (timestamp with time zone, default now())
+// avatar_url (text) ← Agregar esta columna también
 
-// Guardar puntuación del usuario
+// Guardar puntuación del usuario (mejorado)
 export const saveUserScore = async (userId: string, userName: string, score: number) => {
   try {
+    // Obtener datos del usuario incluyendo avatar
+    const { data: userData, error: userError } = await supabase.auth.getUser()
+    
+    if (userError) {
+      console.error('Error obteniendo usuario:', userError)
+    }
+    
+    let avatarUrl = null
+    if (userData?.user?.user_metadata?.avatar_url) {
+      avatarUrl = userData.user.user_metadata.avatar_url
+    }
+
     const { data, error } = await supabase
       .from('scores')
       .insert([
         { 
           user_id: userId,
           user_name: userName,
-          score: score
+          score: score,
+          avatar_url: avatarUrl // ← Guardar URL del avatar
         }
       ])
       .select();
 
     if (error) throw error;
-
-    console.log('Puntuación guardada exitosamente:', data);
+    
+    console.log('Score guardado con avatar:', data);
     return data;
   } catch (error) {
-    console.error('Error guardando puntuación:', error);
+    console.error('Error guardando score:', error);
     throw error;
   }
 };
 
-// Obtener todas las puntuaciones ordenadas (de mayor a menor)
-export const getAllScores = async (limit?: number): Promise<UserScore[]> => {
+// Obtener mejores puntuaciones con avatares
+export const getTopScores = async (limit: number = 10) => {
   try {
-    let query = supabase
+    const { data, error } = await supabase
       .from('scores')
       .select('*')
-      .order('score', { ascending: false });
-
-    if (limit) {
-      query = query.limit(limit);
-    }
-
-    const { data, error } = await query;
+      .order('score', { ascending: false })
+      .limit(limit);
 
     if (error) throw error;
-
+    
+    console.log('Scores obtenidos:', data); // ← Log para debug
     return data as UserScore[];
   } catch (error) {
-    console.error('Error obteniendo puntuaciones:', error);
-    throw error;
+    console.error('Error obteniendo scores:', error);
+    return [];
   }
 };
 
-// Obtener puntuaciones de un usuario específico (ordenadas de mayor a menor)
-export const getUserScores = async (userId: string, limit?: number): Promise<UserScore[]> => {
+// Obtener scores del usuario actual con avatar
+export const getUserScores = async (userId: string) => {
   try {
-    let query = supabase
+    const { data, error } = await supabase
       .from('scores')
       .select('*')
       .eq('user_id', userId)
       .order('score', { ascending: false });
 
-    if (limit) {
-      query = query.limit(limit);
-    }
-
-    const { data, error } = await query;
-
     if (error) throw error;
-
+    
     return data as UserScore[];
   } catch (error) {
-    console.error('Error obteniendo puntuaciones del usuario:', error);
-    throw error;
+    console.error('Error obteniendo scores del usuario:', error);
+    return [];
   }
 };
 
-// Obtener el ranking global con información de usuarios
-export const getScoreRanking = async (limit: number = 10): Promise<UserScore[]> => {
+// Función auxiliar para obtener el avatar del usuario actual
+export const getUserAvatar = async () => {
+  try {
+    const { data: userData, error } = await supabase.auth.getUser()
+    
+    if (error || !userData?.user) {
+      return null
+    }
+    
+    return userData.user.user_metadata?.avatar_url || null
+  } catch (error) {
+    console.error('Error obteniendo avatar:', error)
+    return null
+  }
+}
+
+// Función para actualizar un score existente (opcional)
+export const updateUserScore = async (scoreId: number, newScore: number) => {
   try {
     const { data, error } = await supabase
       .from('scores')
-      .select(`
-        *,
-        user:user_id (email, metadata)
-      `)
-      .order('score', { ascending: false })
-      .limit(limit);
+      .update({ score: newScore })
+      .eq('id', scoreId)
+      .select();
 
     if (error) throw error;
-
-    return data as UserScore[];
+    
+    return data;
   } catch (error) {
-    console.error('Error obteniendo ranking:', error);
+    console.error('Error actualizando score:', error);
     throw error;
   }
 };

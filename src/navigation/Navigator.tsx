@@ -10,6 +10,7 @@ import App from '../components/App'
 import { createStackNavigator } from '@react-navigation/stack'
 import LoginScreen from '../../auth/LoginScreen'
 import RegistroScreen from '../../auth/RegistroScreen'
+import MenuScreen from '../screens/MenuScreen'
 
 
 
@@ -35,7 +36,7 @@ function MyStack() {
 function MyDrawer() {
   return (
     <Drawer.Navigator>
-      
+      <Drawer.Screen name="Menu" component={MenuScreen} />
       <Drawer.Screen name="Perfil" component={PerfilScreen} />
       <Drawer.Screen name="Juego" component={JuegoScreen} />
       <Drawer.Screen name="Puntuacion" component={ScoreScreen} />
