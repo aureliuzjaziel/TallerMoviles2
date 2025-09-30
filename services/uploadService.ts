@@ -6,10 +6,10 @@ export async function subirImagen(imageUri: string, userId: string) {
     
     console.log('🔄 Procesando imagen:', imageUri.substring(0, 50) + '...')
     
-    // ✅ MÉTODO SIMPLIFICADO - Sin carpeta public/
+   
     const { data, error } = await supabase.storage
       .from('avatars')
-      .upload(fileName, {  // ✅ SIN public/
+      .upload(fileName, {  
         uri: imageUri,
         name: fileName
       } as any, {
@@ -26,10 +26,10 @@ export async function subirImagen(imageUri: string, userId: string) {
 
     console.log('✅ Imagen subida exitosamente:', data)
 
-    // Obtener URL pública
+    
     const { data: urlData } = supabase.storage
       .from('avatars')
-      .getPublicUrl(fileName)  // ✅ SIN public/
+      .getPublicUrl(fileName) 
 
     console.log('📸 URL generada:', urlData.publicUrl)
     return urlData.publicUrl

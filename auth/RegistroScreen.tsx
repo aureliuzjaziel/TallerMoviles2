@@ -33,7 +33,7 @@ export default function RegistroScreen({ navigation }: any) {
   };
 
   async function registro() {
-    // VALIDACIONES SIN CÉDULA
+    
     if (!correo || !contrasenia || !confirmacionContrasenia || !edad || !nick) {
       Alert.alert("Error", "Todos los campos son obligatorios")
       return
@@ -47,7 +47,7 @@ export default function RegistroScreen({ navigation }: any) {
     setLoading(true)
 
     try {
-      // 1. Crear usuario en auth
+      
       const { data, error } = await supabase.auth.signUp({
         email: correo,
         password: contrasenia,
@@ -55,13 +55,13 @@ export default function RegistroScreen({ navigation }: any) {
 
       if (error) throw error
 
-      // 2. Subir imagen si existe
+      
       let urlImagen = null
       if (imagen && data.user) {
         urlImagen = await subirImagen(imagen, data.user.id)
       }
 
-      // 3. ✅ NUEVO: Guardar en tabla usuarios
+      
       if (data.user) {
         const { error: insertError } = await supabase
           .from('usuarios')
@@ -80,7 +80,7 @@ export default function RegistroScreen({ navigation }: any) {
           return
         }
 
-        // 4. ✅ TAMBIÉN guardar en metadata para compatibilidad
+        
         await supabase.auth.updateUser({
           data: {
             nick: nick,
@@ -104,21 +104,21 @@ export default function RegistroScreen({ navigation }: any) {
   return (
     <ImageBackground source={backgroundImage} style={styles.background} resizeMode="cover">
       <View style={styles.overlay}>
-        {/* ✅ CONTENEDOR CON SCROLL QUE INCLUYE EL LOGO */}
+        
         <ScrollView 
           contentContainerStyle={{ 
             alignItems: 'center', 
-            paddingTop: 40, // ✅ AGREGAR padding top para bajar el logo
+            paddingTop: 40, 
             paddingBottom: 30,
             width: '100%'
           }}
           style={{ flex: 1, width: '100%' }}
           showsVerticalScrollIndicator={false}
         >
-          {/* ✅ LOGO DENTRO DEL SCROLL */}
+          
           <Image source={logo} style={[styles.logo, { width: 80, height: 80, marginBottom: 15 }]} resizeMode="contain" />
           
-          {/* ✅ PREVIEW DE IMAGEN MÁS PEQUEÑO */}
+         
           {imagen && (
             <Image 
               source={{ uri: imagen }} 
@@ -133,7 +133,7 @@ export default function RegistroScreen({ navigation }: any) {
             />
           )}
           
-          {/* ✅ BOTÓN DE FOTO MÁS COMPACTO */}
+         
           <TouchableOpacity
             style={[
               styles.button, 
@@ -196,7 +196,7 @@ export default function RegistroScreen({ navigation }: any) {
             placeholderTextColor="black"
           />
 
-          {/* ✅ BOTÓN REGISTRARME MÁS ANCHO */}
+         
           <TouchableOpacity 
             style={[
               styles.button, 
@@ -204,8 +204,8 @@ export default function RegistroScreen({ navigation }: any) {
               { 
                 marginTop: 15,
                 paddingVertical: 15,
-                width: 250, // ✅ AUMENTAR de 200 a 250
-                paddingHorizontal: 20 // ✅ AGREGAR padding horizontal
+                width: 250, 
+                paddingHorizontal: 20 
               }
             ]}
             onPress={registro}
@@ -216,7 +216,7 @@ export default function RegistroScreen({ navigation }: any) {
             </Text>
           </TouchableOpacity>
 
-          {/* ✅ BOTÓN YA TIENES CUENTA MÁS ANCHO */}
+         
           <TouchableOpacity 
             style={[
               styles.button, 
@@ -224,8 +224,8 @@ export default function RegistroScreen({ navigation }: any) {
               { 
                 marginTop: 10,
                 paddingVertical: 12,
-                width: 250, // ✅ AUMENTAR de 200 a 250
-                paddingHorizontal: 15 // ✅ AGREGAR padding horizontal
+                width: 250,
+                paddingHorizontal: 15 
               }
             ]}
             onPress={() => navigation.navigate('Login')}

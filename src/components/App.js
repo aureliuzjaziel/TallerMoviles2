@@ -3,8 +3,8 @@ import { StatusBar } from "expo-status-bar";
 import { SafeAreaView, StyleSheet, Text, View, ImageBackground, TouchableOpacity } from "react-native";
 import Card from "./Card";
 import { styles as globalStyles } from '../theme/estilos';
-import { supabase } from '../../supabase/config'; // Changed from Firebase to Supabase
-import { saveUserScore } from '../../services/scoreService'; // Make sure this uses Supabase
+import { supabase } from '../../supabase/config'; 
+import { saveUserScore } from '../../services/scoreService'; 
 
 const backgroundImage = require('../imagenes/fondonuves.jpg');
 
@@ -57,7 +57,7 @@ export default function App() {
 
   const didPlayerWin = () => matchedCards.length === board.length;
 
-  // Save score when game ends
+  // guardar score
   React.useEffect(() => {
     if (didPlayerWin() && !gameFinished) {
       setGameFinished(true);
